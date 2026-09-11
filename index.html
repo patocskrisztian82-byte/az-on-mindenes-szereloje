@@ -1,0 +1,112 @@
+from pathlib import Path
+import zipfile, textwrap
+
+out = Path("/mnt/data/az_on_mindenes_szereloje")
+out.mkdir(exist_ok=True)
+
+html = r'''<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Az Ön Mindenes Szerelője | Dunaszerdahely</title>
+<meta name="description" content="Az Ön Mindenes Szerelője – megbízható szerelési és karbantartási munkák Dunaszerdahelyen és környékén.">
+<style>
+:root{--dark:#101820;--blue:#1769aa;--light:#f5f7fa;--white:#fff;--text:#263238}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--light);line-height:1.6}
+a{text-decoration:none;color:inherit}.container{max-width:1100px;margin:auto;padding:0 20px}
+header{background:var(--dark);color:white;position:sticky;top:0;z-index:10;box-shadow:0 2px 10px #0002}
+.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-weight:800;font-size:20px}.navlinks{display:flex;gap:22px}.navlinks a{color:#fff;font-weight:600}
+.hero{background:linear-gradient(135deg,#101820,#1769aa);color:#fff;padding:90px 0}
+.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.05;margin:0 0 18px}
+.hero p{font-size:21px;max-width:700px;margin:0 0 30px}
+.buttons{display:flex;flex-wrap:wrap;gap:12px}.btn{display:inline-block;padding:14px 22px;border-radius:8px;font-weight:800}
+.primary{background:#fff;color:#1769aa}.secondary{border:2px solid #fff;color:#fff}
+section{padding:70px 0}.title{text-align:center;margin-bottom:38px}.title h2{font-size:36px;margin:0 0 8px}.title p{margin:0;color:#60717d}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border-radius:14px;padding:26px;box-shadow:0 6px 24px #0000000d}.icon{font-size:32px}.card h3{margin:10px 0 6px}
+.about{background:#fff}.contact{background:var(--dark);color:#fff}
+.contactbox{display:grid;grid-template-columns:1fr 1fr;gap:35px}.contact a.phone{font-size:30px;font-weight:800;color:#8ed0ff}
+form{display:grid;gap:12px}input,textarea{width:100%;padding:14px;border:0;border-radius:8px;font:inherit}textarea{min-height:130px;resize:vertical}
+button{border:0;cursor:pointer;font:inherit;font-weight:800}
+footer{background:#0a1015;color:#aebbc3;padding:25px 0;text-align:center;font-size:14px}
+@media(max-width:760px){.navlinks{display:none}.grid{grid-template-columns:1fr}.contactbox{grid-template-columns:1fr}.hero{padding:65px 0}section{padding:55px 0}}
+</style>
+</head>
+<body>
+<header>
+<div class="container nav">
+<div class="logo">🔧 Az Ön Mindenes Szerelője</div>
+<nav class="navlinks"><a href="#szolgaltatasok">Szolgáltatások</a><a href="#rolam">Rólam</a><a href="#kapcsolat">Kapcsolat</a></nav>
+</div>
+</header>
+
+<main>
+<section class="hero">
+<div class="container">
+<p style="font-weight:700;margin-bottom:10px">Dunaszerdahely és környéke</p>
+<h1>Megbízható segítség otthon és az autó körül.</h1>
+<p>Tiszta, precíz és megbízható munkavégzés. Kisebb szerelési, javítási és karbantartási munkák egy helyen.</p>
+<div class="buttons">
+<a class="btn primary" href="tel:+421948942900">📞 Hívjon most</a>
+<a class="btn secondary" href="#kapcsolat">✉️ Munkát szeretnék kérni</a>
+</div>
+</div>
+</section>
+
+<section id="szolgaltatasok">
+<div class="container">
+<div class="title"><h2>Szolgáltatások</h2><p>Amiben számíthat rám</p></div>
+<div class="grid">
+<div class="card"><div class="icon">🚰</div><h3>Vízszerelés</h3><p>Csaptelepek, WC-k és kisebb vízszerelési munkák.</p></div>
+<div class="card"><div class="icon">💡</div><h3>Villanyszerelés</h3><p>Kapcsolók, lámpák cseréje és kisebb javítások.</p></div>
+<div class="card"><div class="icon">🏠</div><h3>Otthoni szerelés</h3><p>Polc, karnis, redőny, ajtózár és egyéb kisebb munkák.</p></div>
+<div class="card"><div class="icon">🚗</div><h3>Autó karbantartás</h3><p>Motorolaj- és akkumulátorcsere, kisebb karbantartási munkák.</p></div>
+<div class="card"><div class="icon">🔧</div><h3>Javítások</h3><p>Praktikus segítség különféle otthoni és szerelési problémákhoz.</p></div>
+<div class="card"><div class="icon">📋</div><h3>Egyedi felkérés</h3><p>Ha olyan munkája van, ami nincs a listán, kérdezzen bátran.</p></div>
+</div>
+</div>
+</section>
+
+<section class="about" id="rolam">
+<div class="container">
+<div class="title"><h2>Az Ön Mindenes Szerelője</h2><p>Tiszta és tökéletes munkavégzés</p></div>
+<div class="card">
+<p>Olyan szerelési és karbantartási munkákban segítek, amelyekhez gyors, megbízható és precíz megoldásra van szükség. Fontos számomra a tiszta munkavégzés, a korrekt hozzáállás és az, hogy az ügyfél elégedetten kapja vissza az elvégzett munkát.</p>
+<p><strong>📍 Dunaszerdahely és környéke</strong></p>
+</div>
+</div>
+</section>
+
+<section class="contact" id="kapcsolat">
+<div class="container">
+<div class="title"><h2>Vegye fel velem a kapcsolatot</h2><p>Írjon pár sort a munkáról, és felveszem Önnel a kapcsolatot.</p></div>
+<div class="contactbox">
+<div>
+<p>📞 Telefon:</p><a class="phone" href="tel:+421948942900">+421 948 942 900</a>
+<p style="margin-top:25px">📍 Dunaszerdahely és környéke</p>
+</div>
+<form action="mailto:IDE_IRD_AZ_EMAIL_CIMED" method="post" enctype="text/plain">
+<input name="nev" placeholder="Név" required>
+<input name="telefon" placeholder="Telefonszám" required>
+<input name="telepules" placeholder="Település">
+<textarea name="uzenet" placeholder="Milyen munkát szeretne?"></textarea>
+<button class="btn primary" type="submit">Munkát szeretnék kérni</button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<footer>© 2026 Az Ön Mindenes Szerelője · Dunaszerdahely és környéke</footer>
+</body>
+</html>'''
+
+(out/"index.html").write_text(html, encoding="utf-8")
+
+zip_path = Path("/mnt/data/az_on_mindenes_szereloje_weboldal.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    z.write(out/"index.html", arcname="index.html")
+
+print(f"Kész: {zip_path}")
